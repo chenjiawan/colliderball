@@ -13,11 +13,11 @@ Scene {
     enabled: visible
 
     // every change in opacity will be done with an animation
-    Behavior on opacity {
-        NumberAnimation {
-            property: "opacity";
-            easing.type: Easing.InOutQuad
-        }
-    }
+//    Behavior on opacity {
+//        NumberAnimation {
+//            property: "opacity";
+//            easing.type: Easing.InOutQuad
+//        }
+//    }
 
 }

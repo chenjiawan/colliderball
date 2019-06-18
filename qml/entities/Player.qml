@@ -13,18 +13,18 @@ EntityBase {
     //property int life: GameInfo.remainLife
     property alias ball: ball
 
-    Canvas{
-        id:canvas
-        anchors.fill: parent
-        antialiasing: true
-        onPaint: {
-            var context = canvas.getContext("2d")
-            context.clearRect(0,0,width,height)
-            context.fillRect(ball.controller.xAxis,ball.controller.yAxis,40,2);
-            context.stroke()
+//    Canvas{
+//        id:canvas
+//        anchors.fill: parent
+//        antialiasing: true
+//        onPaint: {
+//            var context = canvas.getContext("2d")
+//            context.clearRect(0,0,width,height)
+//            context.fillRect(ball.controller.xAxis,ball.controller.yAxis,40,2);
+//            context.stroke()
 
-        }
-    }
+//        }
+//    }
 
     Ball{
         id:ball

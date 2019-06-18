@@ -60,14 +60,12 @@ Scene{
             Text {
                 //        if(checkState == "Qt.checked")
                 x: 121
-
                 font.pixelSize: 24
                 text: "设置"
                 color: "black"
             }
 
             Text {
-
                 font.pixelSize: 12
                 text: "声音"
                 color: "black"
@@ -83,15 +81,12 @@ Scene{
                 color: "black"
             }
             Text {
-
-
                 font.pixelSize: 12
                 text: "帮助"
                 color: "black"
             }
             Text {
                 x: 121
-
                 font.pixelSize: 12
                 text: "V 1.0"
                 color: "black"

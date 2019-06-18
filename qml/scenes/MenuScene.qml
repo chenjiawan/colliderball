@@ -37,10 +37,6 @@ SceneBase {
             text: "Levels"
             onClicked: selectLevelPressed()
         }
-        MenuButton {
-            text: "Credits"
-            onClicked: creditsPressed()
-        }
     }
 
     MenuButton {

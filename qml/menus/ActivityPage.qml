@@ -10,7 +10,6 @@ import"../scenes"
 Scene{
     id:activitypage
 
-
     Rectangle{
         width: parent.width
         height: parent.height
