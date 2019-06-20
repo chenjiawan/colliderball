@@ -1,30 +1,31 @@
 import Felgo 3.0
 import QtQuick 2.2
 import "../common"
-import"../common"
 import ".."
 import"../control"
 import "../entities"
 import"../scenes"
+
+//游戏界面
 SceneBase {
+
     id:gameScene
 
     PhysicsWorld {
         id: world
+        anchors.fill: parent
         updatesPerSecondForPhysics: 60
         debugDrawVisible: true
-
+        z:2
     }
 
-    // the filename of the current level gets stored here, it is used for loading the
+    // 当前关卡的文件名存储在这里，它用于加载
     property string activeLevelFileName
-    // the currently loaded level gets stored here
+
+    // 当前加载的关卡存储
     property variant activeLevel
 
-    // countdown shown at level start
-    property int countdown: 0
-
-    // set the name of the current level, this will cause the Loader to load the corresponding level
+    // 设置当前关卡名字, 使加载器加载绑定的关卡
     function setLevel(fileName) {
         activeLevelFileName = fileName
     }
@@ -33,9 +34,8 @@ SceneBase {
     // 背景
     Rectangle {
         anchors.fill: parent.gameWindowAnchorItem
-        color: "lightblue"
+        color: "lightsteelblue"
     }
-
 
     //这里是剩余生命值（图片显示生命值）
     Repeater{
@@ -49,48 +49,19 @@ SceneBase {
     // 运行时加载关卡
     Loader {
         id: loader
-        source: activeLevelFileName != "" ? "../levels/" + activeLevelFileName : ""
+        source: activeLevelFileName != ""  ?  "../levels/" + activeLevelFileName : ""
         onLoaded: {
-            // since we did not define a width and height in the level item itself, we are doing it here
+            // 没有在level项目本身中定义宽度和高度，所以在这里定义
             item.width = gameScene.width
             item.height = gameScene.height
-            // store the loaded level as activeLevel for easier access
+            // 将加载的关卡存储为activeLevel，以便更容易地访问
             activeLevel = item
-            // restarts the countdown
-            countdown = 5
         }
     }
 
-    // we connect the gameScene to the loaded level
+    // 将gameScene链接到加载的关卡
     Connections {
-        // only connect if a level is loaded, to prevent errors
+        // 只有在加载级别时才连接，以防止错误
         target: activeLevel !== undefined ? activeLevel : null
     }
-
-    // if the countdown is greater than 0, this timer is triggered every second, decreasing the countdown (until it hits 0 again)
-    Timer {
-        repeat: true
-        running: countdown > 0
-        onTriggered: {
-            countdown--
-        }
-    }
-
-//    Camera {
-//          id: camera
-
-//          focus: false
-//          // set the gameWindowSize and entityContainer required for the camera
-//          gameWindowSize: Qt.point(gameScene.gameWindowAnchorItem.width, gameScene.gameWindowAnchorItem.height)
-//          entityContainer: gameScene
-
-//          // if you don't set the focusedObject property, or set it to null, the camera is freely movable
-//          focusedObject: player
-
-//          // set the camera's limits
-//          limitLeft: 0
-//          limitRight: 600
-//          limitTop: 0
-//          limitBottom: 400
-//        }
 }

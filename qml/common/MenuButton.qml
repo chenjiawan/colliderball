@@ -4,27 +4,33 @@ import ".."
 import"../control"
 import "../entities"
 import"../scenes"
+import QtMultimedia 5.9
+
+//自定义菜单按钮
 Rectangle {
     id: button
-    // this will be the default size, it is same size as the contained text + some padding
+    // 默认按钮大小 = 文本大小 + 边距大小
     width: buttonText.width+ paddingHorizontal*2
     height: buttonText.height+ paddingVertical*2
 
+    //设置自定义菜单按钮颜色
     color: "#e9e9e9"
-    // round edges
+    border.color: "#333"
+
     radius: 10
 
-    // the horizontal margin from the Text element to the Rectangle at both the left and the right side.
+    // 文本到矩形的水平边距
     property int paddingHorizontal: 10
-    // the vertical margin from the Text element to the Rectangle at both the top and the bottom side.
+    // 文本和矩形的垂直边距
     property int paddingVertical: 5
 
-    // access the text of the Text component
+    // 访问文本组件的文本
     property alias text: buttonText.text
 
-    // this handler is called when the button is clicked.
+    // 点击信号
     signal clicked
 
+    //文本设置
     Text {
         id: buttonText
         anchors.centerIn: parent
@@ -32,12 +38,31 @@ Rectangle {
         color: "black"
     }
 
+    //鼠标点击区域
     MouseArea {
         id: mouseArea
         anchors.fill: parent
-        hoverEnabled: true
-        onClicked: button.clicked()
-        onPressed: button.opacity = 0.5
-        onReleased: button.opacity = 1
+        hoverEnabled: true      //鼠标悬停，悬停允许处理所有鼠标事件，即使没有按下鼠标按钮。
+
+        onClicked: {
+            parent.scale = 1.0
+            parent.clicked()
+        }
+        onPressed: {
+            parent.scale = 0.85
+            button.opacity = 0.5
+        }
+        onReleased: {
+            parent.scale = 1.0
+            button.opacity = 1
+        }
+        onCanceled: {
+            parent.scale = 1.0
+        }
+    }
+
+    //按钮点击音效
+    SoundEffect{
+
     }
 }

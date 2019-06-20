@@ -2,14 +2,15 @@ import Felgo 3.0
 import QtQuick 2.0
 import QtQuick.Controls 2.3
 
-import "../scenes"
+
 import"../common"
 import ".."
 import"../control"
 import "../entities"
 import"../scenes"
 
-SceneBase{
+//主页
+Scene{
     id:homepage
 
     signal selectLevelPressed
@@ -20,33 +21,25 @@ SceneBase{
         width: parent.width
         height: parent.height
     }
-    // "L O G O!!!!"
+
+    // "项目 L O G O!!!!"
     Text {
         anchors.horizontalCenter: parent.horizontalCenter
         y: 30
-        font.pixelSize: 30
+        font.pixelSize: 40
         color: "black"
         text: "Collider Ball"
     }
+
+    //选择关卡按钮
     MenuButton{
-        text: qsTr("开始游戏")
+        text: qsTr("选择关卡")
         x:parent.width/3
         y:parent.height/1.4
         onClicked:
         {
-            console.log("start clicked")
+            //console.log("start clicked")
             selectLevelPressed()
         }
-
-
-    }
-    MenuButton {
-        text: "Back"
-        // anchor the button to the gameWindowAnchorItem to be on the edge of the screen on any device
-        anchors.right: parent.right
-        anchors.rightMargin: 10
-        anchors.top: parent.top
-        anchors.topMargin: 10
-        onClicked: backButtonPressed()
     }
 }

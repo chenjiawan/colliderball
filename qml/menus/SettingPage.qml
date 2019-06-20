@@ -2,35 +2,29 @@ import Felgo 3.0
 import QtQuick 2.0
 import QtQuick.Controls 2.3
 import QtMultimedia 5.0
-import "../scenes"
+
 import"../common"
 import ".."
 import"../control"
 import "../entities"
 import"../scenes"
 
+//设置页面
 Scene{
     id:settingpage
 
  signal settingsPressed
-    //    function playbgmusic(){
-    //        if(checkState == "Qt.checked")
-    //            playmusic.play();
-    //        else{
-    //            playmusic.pause();
-    //        }
-    //    }
 
     BackgroundMusic{
         id:playmusic1
         source: ""
         loops: SoundEffect.Infinite
         volume: 0.35
-        //Settings.musicEnabled: true
 
-        // autoLoad: true
         autoPauseInBackground:true
     }
+
+
     Timer {
       id: timerMusic
       interval: 100; running: true; repeat: true;
@@ -57,6 +51,7 @@ Scene{
             width: parent.width - 40
             anchors.horizontalCenterOffset: 0
             spacing: 20
+
             Text {
                 //        if(checkState == "Qt.checked")
                 x: 121
@@ -64,7 +59,6 @@ Scene{
                 text: "设置"
                 color: "black"
             }
-
             Text {
                 font.pixelSize: 12
                 text: "声音"
@@ -105,12 +99,10 @@ Scene{
 
             }
 
-
             CheckBox {
                 id: checkBox1
                 width: 30
                 height: 30
-
             }
         }
 

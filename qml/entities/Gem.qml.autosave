@@ -6,8 +6,10 @@ import ".."
 import"../control"
 import "../entities"
 import"../scenes"
-EntityBase {
 
+//宝石
+EntityBase {
+    
     id:gem
     entityId: "gem"
     entityType: "gem"
@@ -16,5 +18,4 @@ EntityBase {
         id: gemimg
         source: ""
     }
-
 }

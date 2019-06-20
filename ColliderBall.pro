@@ -60,9 +60,12 @@ macx {
 }
 
 DISTFILES += \
-    qml/entities/Gem.qml \
     qml/GameInfo.qml \
     qml/menus/ActivityPage.qml \
     qml/menus/HomePage.qml \
     qml/menus/SettingPage.qml \
-    qml/menus/StorePage.qml
+    qml/menus/StorePage.qml \
+    qml/scenes/StartScene.qml \
+    qml/scenes/LoadScene.qml \
+    qml/common/TextButton.qml \
+    qml/levels/Level2.qml

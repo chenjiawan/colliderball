@@ -13,9 +13,10 @@ EntityBase {
     BoxCollider {
         id: boxCollider
         bodyType: Body.Static
-        // the size of the collider is the same as the one from entity by default
+        //默认的，碰撞器大小与实体大小相同
     }
 
+    //墙体设置
     Rectangle {
         anchors.fill: parent
         color: "blue"

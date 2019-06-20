@@ -1,6 +1,5 @@
 import Felgo 3.0
 import QtQuick 2.0
-import "./scenes"
 import"./common"
 import ".."
 import"./control"
@@ -11,18 +10,17 @@ import QtQuick.Controls 2.3
 
 GameWindow {
     id: window
-    //    screenWidth: 460
-    //    screenHeight: 640
+    screenWidth: 460
+    screenHeight: 640
     visible: true
 
-    property alias gameScene: gameScene
-
+    //创建实体
     EntityManager {
         id: entityManager
+        entityContainer: gameScene
     }
 
     //菜单场景
-
     SwipeView{
         id: menuScene
         anchors.rightMargin: 0
@@ -31,26 +29,27 @@ GameWindow {
         anchors.topMargin: 0
         anchors.fill: parent
         currentIndex: tabBar.currentIndex
+        opacity: 0
         HomePage{
             id:page1
+            //选择关卡被点击
             onSelectLevelPressed: {
-                window.state = "selectLevel"
-                console.log("selectlevel clicked")
+                window.state = "selectLevel"        //状态设为选择关卡
             }
             onBackButtonPressed: {
                 nativeUtils.displayMessageBox(qsTr("是否退出游戏?"), "" , 3);
             }
-            // listen to the return value of the MessageBox
+            // 监听MessageBox的返回值
             Connections {
                 target: nativeUtils
                 onMessageBoxFinished: {
-                    // only quit, if the activeScene is menuScene - the messageBox might also get opened from other scenes in your code
+                    // 只退出，如果当前场景为菜单场景，messageBox也会弹出
                     if(accepted && window.activeScene === menuScene)
                         Qt.quit()
                 }
             }
-
         }
+
         StorePage{
             id:page2
         }
@@ -61,9 +60,10 @@ GameWindow {
             id:page4
         }
     }
+    //menu界面下面的四个TabBar
     TabBar{
         id:tabBar
-        currentIndex: swipeview.currentIndex
+        currentIndex: menuScene.currentIndex
         y:parent.height-home.height
         TabButton{
             id:home
@@ -75,7 +75,7 @@ GameWindow {
             Image {
                 focus: true
                 id: homeiamge
-                source: "../../assets/img/homebutton.png"
+                source: "../assets/img/homebutton.png"
                 anchors.fill: parent
             }
         }
@@ -87,11 +87,17 @@ GameWindow {
             opacity: 0.5
             Image {
                 id: storeiamge
-                source: "../../assets/img/storebutton.png"
+                source: "../assets/img/storebutton.png"
                 anchors.fill: parent
             }
         }
         TabButton{
+
+            ColorAnimation {
+                from: "blue"
+                to: "lightblue"
+                duration: 200
+            }
             focus: true
             text:qsTr("活动")
             font.pixelSize: 12
@@ -100,7 +106,7 @@ GameWindow {
             opacity: 0.5
             Image {
                 id: acitivityiamge
-                source: "../../assets/img/acitivitybutton.png"
+                source: "../assets/img/acitivitybutton.png"
                 anchors.fill: parent
             }
         }
@@ -113,52 +119,83 @@ GameWindow {
             height: window.height/9
             Image {
                 id: settingiamge
-                source: "../../assets/img/settingbutton.png"
+                source: "../assets/img/settingbutton.png"
                 anchors.fill: parent
             }
         }
     }
 
-
     //选择关卡场景
     SelectLevelScene {
         id: selectLevelScene
+        //选择关卡信号槽
         onLevelPressed: {
-            // selectedLevel is the parameter of the levelPressed signal
             gameScene.setLevel(selectedLevel)
-            window.state = "game"
-
+            window.state = "game"           //关卡被确定选择后进入游戏状态
         }
-        onBackButtonPressed: window.state = "menu"
+        onBackButtonPressed: window.state = "menu"      //选择关卡状态时按下返回将状态设置为菜单状态
     }
-
 
     //一关的游戏场景
     GameScene {
         id: gameScene
-        onBackButtonPressed: window.state = "selectLevel"
+        onBackButtonPressed: window.state = "selectLevel"       //游戏状态时按下返回将状态设置为选择关卡状态
     }
 
-    //菜单场景时第一个场景，所以初始化为菜单场景
-    state: "menu"
-    activeScene: menuScene
+    //开始场景
+    StartScene{
+        id:startScene
 
-    //状态机 takes care reversing the PropertyChanges when changing the state, like changing the opacity back to 0
+        onStartGameclicked: {
+            window.state = "menu"       //开始状态时触摸进入菜单状态
+        }
+    }
+
+    //加载场景
+    LoadScene{
+        id:loadScene
+        Timer{
+            running: true
+            id:loadTimeOver
+            interval: 5000
+            onTriggered: {
+                window.state = "start"          //加载时间完成进入开始状态
+            }
+        }
+    }
+
+    //设置第一个场景，开始为游戏加载场景
+    state: "load"
+    activeScene: loadScene
+
+    //状态机 转换状态的时候切换场景，改变opacity
     states: [
+        State {                 //加载状态
+            name: "load"
+            PropertyChanges {target: loadScene; opacity: 1}
+            PropertyChanges {target: window; activeScene: loadScene}
+        },
         State {
+            name: "start"       //开始状态
+            PropertyChanges {target: startScene; opacity: 1}
+            PropertyChanges {target: window; activeScene: startScene}
+        },
+        State {                 //菜单状态
             name: "menu"
             PropertyChanges {target: menuScene; opacity: 1}
             PropertyChanges {target: window; activeScene: menuScene}
         },
-        State {
+        State {                 //选择关卡状态
             name: "selectLevel"
             PropertyChanges {target: selectLevelScene; opacity: 1}
             PropertyChanges {target: window; activeScene: selectLevelScene}
         },
-        State {
+        State {                 //游戏状态
             name: "game"
             PropertyChanges {target: gameScene; opacity: 1}
             PropertyChanges {target: window; activeScene: gameScene}
         }
     ]
+
+
 }

@@ -1,11 +1,12 @@
 import Felgo 3.0
 import QtQuick 2.0
 import "../common"
-import"../common"
 import ".."
 import"../control"
 import "../entities"
 import"../scenes"
+
+//菜单场景
 SceneBase {
     id: menuScene
 
@@ -17,7 +18,7 @@ SceneBase {
     // 背景
     Rectangle {
         anchors.fill: parent.gameWindowAnchorItem
-        color: "#47688e"
+        color: "lightsteelblue"
     }
 
     // "L O G O!!!!"
@@ -37,15 +38,5 @@ SceneBase {
             text: "Levels"
             onClicked: selectLevelPressed()
         }
-    }
-
-    MenuButton {
-        text: "Back"
-        // anchor the button to the gameWindowAnchorItem to be on the edge of the screen on any device
-        anchors.right: parent.right
-        anchors.rightMargin: 10
-        anchors.top: parent.top
-        anchors.topMargin: 10
-        onClicked: backButtonPressed()
     }
 }

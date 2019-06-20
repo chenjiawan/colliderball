@@ -7,7 +7,9 @@ import ".."
 import"../control"
 import "../entities"
 import"../scenes"
+import QtMultimedia 5.9
 
+//商店页面
 Scene{
     id:storepage
 
@@ -15,13 +17,18 @@ Scene{
         id:hole1
         width: parent.width
         height: parent.height
-        Button{
-            text: qsTr("新000")
-            id:hairubutton
+        MenuButton{
+            text: qsTr("商店")
+            id:store
             width: 100
             height: 50
             x:parent.width/3
-            y:parent.height/1.4        }
+            y:parent.height/1.4
+        }
     }
 
+    //商店界面音效
+    SoundEffect{
+
+    }
 }

@@ -6,25 +6,15 @@ import"../control"
 import "../entities"
 import"../scenes"
 
+//玩家
 EntityBase {
     id:player
     entityType: "player"
 
     //property int life: GameInfo.remainLife
     property alias ball: ball
-
-//    Canvas{
-//        id:canvas
-//        anchors.fill: parent
-//        antialiasing: true
-//        onPaint: {
-//            var context = canvas.getContext("2d")
-//            context.clearRect(0,0,width,height)
-//            context.fillRect(ball.controller.xAxis,ball.controller.yAxis,40,2);
-//            context.stroke()
-
-//        }
-//    }
+    property int life
+    property alias player: player
 
     Ball{
         id:ball
@@ -43,13 +33,13 @@ EntityBase {
 
         //如果剩余生命值不为0,减去一滴生命
         if (!GameInfo.gameOver){
-            life = life - 1
+            life = life--
             reset()
         }
 
         //剩余生命低于0,结束游戏
-        if (life <= 0) {
-          endGame()
+        if (life < 0) {
+            endGame()
         }
     }
 
@@ -59,14 +49,15 @@ EntityBase {
         endGame.play();
 
         //暂停，停止游戏
-        GameInfo.gamePaused = true
+        //GameInfo.gamePaused = true
         GameInfo.gameOver = true
+
+        reset();
     }
 
-    // reset all player variables, restor health and reset position & rotation
-    //重置玩家变量，恢复健康并重置位置和旋转
+    //重置玩家变量，生命值减1 并重置位置
     function reset(){
-      ball.x = ball.originX;
-      ball.y = ball.originY;
+        ball.x = ball.originX;
+        ball.y = ball.originY;
     }
 }
