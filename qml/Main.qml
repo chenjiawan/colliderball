@@ -196,6 +196,4 @@ GameWindow {
             PropertyChanges {target: window; activeScene: gameScene}
         }
     ]
-
-
 }

@@ -81,24 +81,27 @@ Item {
         }
     }
 
-    //相机
-    //    Camera{
-    //        id:camera
-    //        focusedObject: playerRed
+//   // 相机
+//        Camera{
+//            id:camera
+//            focusedObject: playerRed
 
-    //        //mouseAreaEnabled: false
-    //        gameWindowSize: Qt.point(gameWindowAnchorItem.width,gameWindowAnchorItem.height)
-    //        entityContainer: level1
-    //    }
+//            //mouseAreaEnabled: false
+//            gameWindowSize: Qt.point(gameWindowAnchorItem.width,gameWindowAnchorItem.height)
+//            entityContainer: level1
+//        }
 
     //重置所有游戏变量和玩家组件
     function resetLevel(){
         activeLevelFileName = ""
 
         GameInfo.gameOver = false
-        //删除实体
-        entityManager.removeEntitiesByFilter()
+
+
+        //如果剩余生命值为小于0删除实体,显示游戏结束画布选择，否则重置小球位置
         var toRemoveEntityTypes = [""];
+        //entityManager.removeEntityByFile();
+
         playerRed.reset()
     }
 

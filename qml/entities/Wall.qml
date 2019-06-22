@@ -9,6 +9,7 @@ import"../scenes"
 EntityBase {
     id: entity
     entityType: "wall"
+    entityId: "wall"
 
     BoxCollider {
         id: boxCollider

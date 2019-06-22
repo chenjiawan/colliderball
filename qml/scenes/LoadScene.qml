@@ -17,7 +17,7 @@ SceneBase{
     Image{
         id:img
         anchors.fill: parent
-        source: "../../assets/img/bg2.jpg"
+        source: "../../assets/img/bg7.jpg"
     }
 
     Text {
@@ -40,7 +40,6 @@ SceneBase{
             anchors.left: load.right
             anchors.leftMargin: 10
             anchors.bottom: load.bottom
-
         }
         Text {
             id: point2
@@ -64,7 +63,6 @@ SceneBase{
             anchors.leftMargin: 10
             anchors.bottom: point2.bottom
         }
-
     }
 
     //加载界面省略号的动画

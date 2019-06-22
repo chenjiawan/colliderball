@@ -7,10 +7,10 @@ import "../entities"
 import"../scenes"
 
 EntityBase {
+    id:entity
     entityType: "ball"
     entityId: "ball"
 
-    id: ball
     x: originX
     y: originY
 
@@ -21,10 +21,10 @@ EntityBase {
 
     // 这个控制帮助控制角色移动
     TwoAxisController {
-      id: twoAxisController
+        id: twoAxisController
 
-      // 提供按下时的逻辑功能 (预判线方向改变，子弹时间)
-      //onInputActionPressed: handleInputAction(actionName)
+        // 提供按下时的逻辑功能 (预判线方向改变，子弹时间)
+        //onInputActionPressed: handleInputAction(actionName)
     }
 
     //球体的可视体
@@ -57,8 +57,20 @@ EntityBase {
         body.angularDamping: 15     //角阻尼，（值越小转动越快）
 
         fixture.onBeginContact: {
-            var colliderEntity = other.getBody().target;
-            var otherEntity = colliderEntity.entityId;
+            var fixture = other;
+            var body = other.getBody();
+            var otherEntity = body.target
+
+            // get the entityType of the colliding entity
+            var collidingType = otherEntity.entityType
+
+            if(collidingType === "wall" ||
+                    collidingType === "rocket") {
+                //entity.removeEntity()
+                reset()
+
+                return
+            }
         }
 
         //更新物理标记，线性速度

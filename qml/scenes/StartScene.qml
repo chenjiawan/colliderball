@@ -11,16 +11,14 @@ SceneBase {
 
     Rectangle{
         anchors.fill: parent
-
         color: "lightsteelblue"
-
         //背景图片
         Image {
-            height: 600
-            width: 800
+
             id: img
             anchors.centerIn: parent
-            source: "../../assets/img/bg3.jpg"
+            source: "../../assets/img/bg2.jpg"
+            anchors.fill: parent
         }
     }
 

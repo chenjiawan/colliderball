@@ -59,5 +59,7 @@ EntityBase {
     function reset(){
         ball.x = ball.originX;
         ball.y = ball.originY;
+
     }
+
 }
