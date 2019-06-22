@@ -12,8 +12,6 @@ SceneBase{
     id:loadScene
     anchors.fill: parent
 
-    signal loadSceneTimeOver
-
     Image{
         id:img
         anchors.fill: parent
@@ -113,6 +111,5 @@ SceneBase{
             from: 1
             to: 0
         }
-
     }
 }

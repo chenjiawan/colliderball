@@ -5,16 +5,24 @@ import ".."
 import"../control"
 import "../entities"
 import"../scenes"
-
+import QtMultimedia 5.9
+import DiaDate 1.0
 //玩家
 EntityBase {
     id:player
     entityType: "player"
 
-    //property int life: GameInfo.remainLife
+    property int life: 3
     property alias ball: ball
-    property int life
     property alias player: player
+
+    //角色拥有的钻石数量
+    property alias diamondNum: diamondNum
+    Diamond{
+        id:diamondNum
+        diamond: 0
+    }
+    //signal RestartScenePlay
 
     Ball{
         id:ball
@@ -28,38 +36,62 @@ EntityBase {
         source:""
     }
 
+    //游戏结束音效
+    MediaPlayer{
+        id:gameoversound
+        //playing: false
+        volume: 1
+        source: "../../assets/sond/GameOver.mp3"
+    }
+
     //球体被摧毁，重新开始函数function
     function onDamagerestart(){
 
         //如果剩余生命值不为0,减去一滴生命
-        if (!GameInfo.gameOver){
-            life = life--
-            reset()
+        if (gameOverSceneOpacity == 0){
+            life = life-1
+
+            console.log("生命值减1, 剩余生命值： "+life)
+            resetBall();
         }
 
         //剩余生命低于0,结束游戏
-        if (life < 0) {
+        if (life == 0) {
+            console.log("剩余生命值为" + life + "游戏结束")
+            gameOverSceneOpacity  = 1
+            console.log("gameOver: " + gameOverSceneOpacity)
             endGame()
         }
+
     }
 
+    //游戏结束
     function endGame(){
+        gameOverSceneOpacity = 1            //设置gameoverScene是否可见
+        gameOverScene.z  = 2    //设置按钮可点
 
-        //显示游戏结束界面
-        endGame.play();
+        gameOverScene.opacity = gameOverSceneOpacity   //设置
+        console.log("gameOverSceneOpacity: " + gameOverSceneOpacity)
+        console.log("游戏结束")       //测试
 
-        //暂停，停止游戏
-        //GameInfo.gamePaused = true
-        GameInfo.gameOver = true
+        gameoversound.play()        //播放结束音效
 
-        reset();
     }
 
-    //重置玩家变量，生命值减1 并重置位置
-    function reset(){
+    //停止播放游戏结束音效
+    function gameoverstop(){
+        gameoversound.stop()
+    }
+
+    //重置玩家变量  并重置位置
+    function resetBall(){
         ball.x = ball.originX;
         ball.y = ball.originY;
 
-    }
+        //小球速度归零
+        ball.controller.xAxis = 0
+        ball.controller.yAxis = 0
 
+        console.log("reset ball")
+    }
 }

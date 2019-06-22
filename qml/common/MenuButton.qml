@@ -21,6 +21,7 @@ Rectangle {
 
     // 文本到矩形的水平边距
     property int paddingHorizontal: 10
+
     // 文本和矩形的垂直边距
     property int paddingVertical: 5
 
@@ -44,6 +45,9 @@ Rectangle {
         anchors.fill: parent
         hoverEnabled: true      //鼠标悬停，悬停允许处理所有鼠标事件，即使没有按下鼠标按钮。
 
+        visible: parent.opacity > 0
+        enabled: visible
+
         onClicked: {
             parent.scale = 1.0
             parent.clicked()
@@ -51,7 +55,10 @@ Rectangle {
         onPressed: {
             parent.scale = 0.85
             button.opacity = 0.5
+            sound.play()
+            console.log("click")
         }
+
         onReleased: {
             parent.scale = 1.0
             button.opacity = 1
@@ -59,10 +66,13 @@ Rectangle {
         onCanceled: {
             parent.scale = 1.0
         }
-    }
 
-    //按钮点击音效
-    SoundEffect{
-
+        //按钮点击音效
+        MediaPlayer{
+            id:sound
+            //playing: false
+            volume: 1
+            source: "../../assets/sond/button.wav"
+        }
     }
 }

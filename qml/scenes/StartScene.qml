@@ -12,11 +12,11 @@ SceneBase {
     Rectangle{
         anchors.fill: parent
         color: "lightsteelblue"
+
         //背景图片
         Image {
-
             id: img
-            anchors.centerIn: parent
+           // anchors.centerIn: parent
             source: "../../assets/img/bg2.jpg"
             anchors.fill: parent
         }
@@ -25,11 +25,17 @@ SceneBase {
     //开始场景的text
     Text {
         id: startTexts
-        font.pixelSize: 15
+        width: parent.width/3
+        height: parent.height/10
+
+        font.pixelSize: 30
         color: "white"
         font.family: ""         //字体风格
         text: qsTr("触摸任意位置开始游戏")
-        anchors.centerIn: parent
+        anchors.top: parent.top
+        anchors.topMargin: parent.height/2-height/2
+        anchors.left: parent.left
+        anchors.leftMargin: parent.width/2-width/2 - 40
         opacity: 1
 
         //一组连续的对opacity属性动画

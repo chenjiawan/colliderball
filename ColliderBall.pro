@@ -39,7 +39,7 @@ RESOURCES += #    resources.qrc # uncomment for publishing
 
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp \
-    player.cpp
+    diamond.cpp
 
 
 android {
@@ -61,15 +61,17 @@ macx {
 }
 
 DISTFILES += \
-    qml/GameInfo.qml \
     qml/menus/ActivityPage.qml \
     qml/menus/HomePage.qml \
     qml/menus/SettingPage.qml \
     qml/menus/StorePage.qml \
     qml/scenes/StartScene.qml \
     qml/scenes/LoadScene.qml \
-    qml/common/TextButton.qml \
-    qml/levels/Level2.qml
+    qml/levels/Level2.qml \
+    qml/scenes/RestartScene.qml \
+    qml/common/ActivityModel.qml \
+    qml/common/BallcolorModel.qml
 
 HEADERS += \
-    player.h
+    diamond.h
+

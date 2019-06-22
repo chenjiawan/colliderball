@@ -10,8 +10,8 @@ import QtQuick.Controls 2.3
 
 GameWindow {
     id: window
-    screenWidth: 460
-    screenHeight: 640
+    screenWidth: 480
+    screenHeight: 720
     visible: true
 
     //创建实体
@@ -63,6 +63,10 @@ GameWindow {
     //menu界面下面的四个TabBar
     TabBar{
         id:tabBar
+        anchors.bottom: window.bottom
+        anchors.bottomMargin: 0
+        width:window.width
+        height: window.height/12
         currentIndex: menuScene.currentIndex
         y:parent.height-home.height
         TabButton{
@@ -70,8 +74,8 @@ GameWindow {
 
             text:qsTr("关卡")
             opacity: 0.5
-            width:window.width/4
-            height: window.height/9
+            width:tabBar.width/4
+            height: tabBar.height
             Image {
                 focus: true
                 id: homeiamge
@@ -82,8 +86,8 @@ GameWindow {
         TabButton{
             focus: true
             text:qsTr("商店")
-            width:window.width/4
-            height: window.height/9
+            width:tabBar.width/4
+            height: tabBar.height
             opacity: 0.5
             Image {
                 id: storeiamge
@@ -101,8 +105,8 @@ GameWindow {
             focus: true
             text:qsTr("活动")
             font.pixelSize: 12
-            width: window.width/4
-            height: window.height/9
+            width: tabBar.width/4
+            height: tabBar.height
             opacity: 0.5
             Image {
                 id: acitivityiamge
@@ -115,8 +119,8 @@ GameWindow {
             focus: true
             text:qsTr("设置")
             font.pixelSize: 12
-            width: window.width/4
-            height: window.height/9
+            width:tabBar.width/4
+            height: tabBar.height
             Image {
                 id: settingiamge
                 source: "../assets/img/settingbutton.png"
@@ -140,6 +144,7 @@ GameWindow {
     GameScene {
         id: gameScene
         onBackButtonPressed: window.state = "selectLevel"       //游戏状态时按下返回将状态设置为选择关卡状态
+
     }
 
     //开始场景

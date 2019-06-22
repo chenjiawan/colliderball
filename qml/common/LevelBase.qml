@@ -11,99 +11,210 @@ import"../scenes"
 Item {
     id:levelBaseScene
 
-    property alias playerRed: playerRed
-    property alias ballRed: playerRed.ball
+    property alias player: player
+    property alias ball: player.ball
     property string levelName
 
-    Item{
-        id:gameWindowAnchorItem
-        x:gameScene.gameWindowAnchorItem.x
-        y:gameScene.gameWindowAnchorItem.y
-        width: gameScene.gameWindowAnchorItem.width
-        height: gameScene.gameWindowAnchorItem.height
-    }
+    property int gameOverSceneOpacity: 0
 
+    signal selectLevelPressed
+
+    Text {
+        id: xy
+        font.pixelSize: 30
+        color: "red"
+        text:gameScene.gameWindowAnchorItem.x
+        anchors.centerIn: parent
+    }
     //玩家
     Player{
-        id:playerRed
-        ball.originX: 100+width/2
-        ball.originY: 250 + height/2
-    }
-
-    //玩家剩余生命值显示图片
-    Image {
-        id: lifeImg
-        source: ""
-    }
-
-    //玩家剩余生命值显示数目
-    Text{
-        id:lifeNum
-        text: ""
+        id:player
+        ball.originX: parent.x + 50
+        ball.originY:parent.y + 50
     }
 
     //玩家移动
     Move{
         z:2
         id:moveRed
-        player: playerRed
+        player: player
 
-        ball:playerRed.ball
-        //originX: gameWindowAnchorItem.width - playerMovementImage.width - 10
-        //originY: 10
+        ball:player.ball
+
         anchors{
-            left: gameWindowAnchorItem.left
-            right: gameWindowAnchorItem.right
-            top: gameWindowAnchorItem.top
+            left: parent.left
+            right: parent.right
+            top: parent.top
         }
-        height: gameWindowAnchorItem.height / 2
+        height: parent.height / 2
+    }
+
+    //玩家剩余生命值显示图片
+    Image {
+        z:4
+        id: lifeImg
+        width: 20
+        height: 20
+        source: "../../assets/img/ball2.png"
+        anchors.left: parent.left
+        anchors.top: parent.top
+    }
+
+    //显示玩家血量
+    Text {
+        z:4
+        id: bloodTxt
+        color: "red"
+        font.pixelSize: 20
+        anchors.left: lifeImg.right
+        anchors.top: lifeImg.top
+        text:"x" + player.life
     }
 
     //返回选择关卡按钮
-    MenuButton{
-        z:1
-        width: 30
-        height: 30
-        // 锚定向返回按钮
-        anchors.right:gameWindowAnchorItem.right
-        anchors.rightMargin: 10
-        anchors.top: gameWindowAnchorItem.top
-        onClicked: {
-            backButtonPressed()
-            resetLevel()
-        }
+    Image {
+        id: backimg
+        source: "../../assets/img/return.png"
+        anchors.top: parent.top
+        anchors.topMargin: 0
+        anchors.rightMargin: 0
+        anchors.right: parent.right
 
-        //返回按钮
-        Image {
-            id: backimg
-            source: "../../assets/img/Back.png"
+        z:3
+        width: 40
+        height: 40
+
+        //返回鼠标区域
+        MouseArea{
+            z:3         //置于最少层使按钮可被随时点击
+            width: 30
+            height: 30
+            opacity: 1
             anchors.fill: parent
+            hoverEnabled: true      //鼠标悬停，悬停允许处理所有鼠标事件，即使没有按下鼠标按钮。
+
+            visible: parent.opacity > 0
+            enabled: visible
+
+            // 锚定向返回按钮
+            anchors.right:parent.right
+            anchors.rightMargin: 10
+            anchors.top: parent.top
+
+            onClicked: {
+                parent.scale = 1.0
+                backButtonPressed()
+                resetLevel()
+                player.gameoverstop()
+            }
+            onPressed: {
+                parent.scale = 0.85
+                parent.opacity = 0.5
+            }
+            onReleased: {
+                parent.scale = 1.0
+                parent.opacity = 1
+            }
+            onCanceled: {
+                parent.scale = 1.0
+            }
         }
     }
-
-//   // 相机
-//        Camera{
-//            id:camera
-//            focusedObject: playerRed
-
-//            //mouseAreaEnabled: false
-//            gameWindowSize: Qt.point(gameWindowAnchorItem.width,gameWindowAnchorItem.height)
-//            entityContainer: level1
-//        }
 
     //重置所有游戏变量和玩家组件
     function resetLevel(){
         activeLevelFileName = ""
 
-        GameInfo.gameOver = false
-
-
+        gameOverSceneOpacity = 0
         //如果剩余生命值为小于0删除实体,显示游戏结束画布选择，否则重置小球位置
         var toRemoveEntityTypes = [""];
-        //entityManager.removeEntityByFile();
 
-        playerRed.reset()
+        entityManager.removeEntityById()
+
+        console.log("resetlevel")
+
     }
 
+    function restartLevel(){
+        activeLevelFileName = "Level1.qml"
+
+        gameOverSceneOpacity = 0
+        console.log("gameOverSceneOpacity: " + gameOverSceneOpacity)
+        //如果剩余生命值为小于0删除实体,显示游戏结束画布选择，否则重置小球位置
+        console.log("restartlevel")
+    }
+
+    //显示游戏结束的窗口
+    Rectangle{
+        id:gameOverScene
+        color:"lightblue"
+        anchors.centerIn: parent
+        width: parent.width
+        height: parent.height
+        //        radius: 10
+        opacity:gameOverSceneOpacity
+        enabled: opacity
+
+        Text {
+            id: continueTxt
+            anchors.top: parent.top
+            anchors.topMargin: 200
+            anchors.horizontalCenter: parent.horizontalCenter
+            text: qsTr("you have die")
+        }
+
+        MenuButton{
+            id:restart
+
+            anchors.top: continueTxt.bottom
+            anchors.topMargin: 10
+            anchors.horizontalCenter: continueTxt.horizontalCenter
+
+            text:"重新开始"
+
+            enabled: visible
+
+            onClicked: {
+                gameOverScene.opacity = 0
+                console.log("重新开始游戏")
+
+                console.log("visible: " + parent.visible)
+                console.log("enabled: " + parent.enabled)
+                gameOverSceneOpacity = 0
+                player.life = 3
+                restartLevel()
+                player.gameoverstop()
+            }
+        }
+
+        MenuButton{
+            id:continueBtn
+
+            anchors.top: restart.bottom
+            anchors.topMargin: 10
+            anchors.horizontalCenter: restart.horizontalCenter
+
+            text:"取消"
+
+
+            onClicked: {
+                gameOverScene.opacity = 0
+                console.log("取消")
+                backButtonPressed()
+                gameOverSceneOpacity = 0
+                player.life = 3
+                player.gameoverstop()
+                resetLevel()
+                backButtonPressed()
+            }
+        }
+    }
+
+    //显示生命值减去1 的窗口
+    RestartScene{
+        id:restartDialog
+
+    }
     //游戏场景音效
+
 }

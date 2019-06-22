@@ -3,13 +3,17 @@
 
 #include <QQmlApplicationEngine>
 
+#include "diamond.h"
+//#include "player.h"
 
 int main(int argc, char *argv[])
 {
-
     QApplication app(argc, argv);
 
     FelgoApplication felgo;
+
+    qmlRegisterType<Diamond>("DiaDate",1,0,"Diamond");
+    //qmlRegisterType<Players>("PlayDate",1,0,"Players");
 
     // QQmlApplicationEngine is the preferred way to start qml projects since Qt 5.2
     // if you have older projects using Qt App wizards from previous QtCreator versions than 3.1, please change them to QQmlApplicationEngine

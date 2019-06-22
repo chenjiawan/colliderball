@@ -9,7 +9,7 @@ import "../levels"
 import "../scenes"
 
 // 玩家的控制区域整个游戏场景
-Rectangle {
+Rectangle{
     id: move
     anchors.top: parent.top
     anchors.topMargin: 30       //为返回按钮留出点击区域
@@ -172,15 +172,14 @@ Rectangle {
         }
 
 
-
         // -------------------玩家放开鼠标或者松开手指------------------------------
         onReleased: {           //按下时空减速
             // 下一个输入将是 新的参考点的 新接触点
             didRegisterReferencePoint = false;
 
             // 调整速度
-            newPosX = newPosX * 4
-            newPosY = newPosY * 4
+            newPosX = newPosX * 2
+            newPosY = newPosY * 2
 
             //放开控制图片消失
             playerMovementImage.opacity = 0
@@ -204,9 +203,14 @@ Rectangle {
 
             // 更新运动
             updateMovement()
+
+            //点击音效
+            clidkSound.play()
+            console.log("touch")
         }
     }
+    SoundEffect{
+        id:clidkSound
+        source: ""
+    }
 }
-
-
-

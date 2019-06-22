@@ -15,8 +15,7 @@ SceneBase {
         id: world
         anchors.fill: parent
         updatesPerSecondForPhysics: 60
-        debugDrawVisible: true
-        z:2
+       //debugDrawVisible: true
     }
 
     // 当前关卡的文件名存储在这里，它用于加载
@@ -30,20 +29,10 @@ SceneBase {
         activeLevelFileName = fileName
     }
 
-
     // 背景
     Rectangle {
         anchors.fill: parent.gameWindowAnchorItem
         color: "lightsteelblue"
-    }
-
-    //这里是剩余生命值（图片显示生命值）
-    Repeater{
-        model: 10
-        Image {
-            id: name
-            source: ""
-        }
     }
 
     // 运行时加载关卡
@@ -56,6 +45,8 @@ SceneBase {
             item.height = gameScene.height
             // 将加载的关卡存储为activeLevel，以便更容易地访问
             activeLevel = item
+
+            console.log("当前关卡：" + activeLevelFileName)
         }
     }
 

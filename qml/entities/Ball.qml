@@ -6,14 +6,16 @@ import"../control"
 import "../entities"
 import"../scenes"
 
+
 EntityBase {
-    id:entity
+    id:ballEntity
     entityType: "ball"
     entityId: "ball"
 
     x: originX
     y: originY
 
+    property color   ballcolor: "black"
     property alias controller: twoAxisController
     property alias circleCollider: circleCollider
     property double originX
@@ -37,7 +39,7 @@ EntityBase {
 
         border.color: "lightyellow"
         border.width: 2
-        color: "black"  //(颜色，可改变，皮肤功能实现，商城)
+        color: ballcolor  //(颜色，可改变，皮肤功能实现，商城)
     }
 
     //球体物理特性
@@ -57,6 +59,7 @@ EntityBase {
         body.angularDamping: 15     //角阻尼，（值越小转动越快）
 
         fixture.onBeginContact: {
+            console.log("ball contact")
             var fixture = other;
             var body = other.getBody();
             var otherEntity = body.target
@@ -64,12 +67,13 @@ EntityBase {
             // get the entityType of the colliding entity
             var collidingType = otherEntity.entityType
 
-            if(collidingType === "wall" ||
-                    collidingType === "rocket") {
-                //entity.removeEntity()
-                reset()
+            if(collidingType === "wall") {
 
+              player.diamondNum .diamond ++
+                player.diamondNum.onDiamondChanged();
+                console.log(player.diamondNum.diamond);
                 return
+
             }
         }
 
@@ -84,5 +88,4 @@ EntityBase {
         }
         //球体碰撞粒子效果
     }
-
 }
