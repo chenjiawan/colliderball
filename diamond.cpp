@@ -2,20 +2,23 @@
 
 #include <QJsonDocument>
 
-Diamond::Diamond(QObject *parent) : QObject(parent)
+Diamond::Diamond(QObject *parent) : QObject(parent),
+    m_diamond(0)
 {
-
+    qDebug()<<"默认构造";
+    Print();
 }
 
 Diamond::Diamond(int diamond):m_diamond(diamond)
 {
+    qDebug()<<"构造";
+    Print();
     m_diamond = 0;
 }
 
 int Diamond::diamond() const
 {
     return  m_diamond ;
-
 }
 
 void Diamond::setDiamond( int diamond)
@@ -56,7 +59,6 @@ bool Diamond::saveDiamond( ) const
 
     qDebug() << "save file successfully";
     return true;
-
 }
 
 void Diamond::read(const QJsonObject &json)
@@ -70,15 +72,17 @@ void Diamond::write(QJsonObject &json) const
     json["diamond"] = m_diamond;
 }
 
-
-
 void Diamond::Print()
 {
     qDebug() << m_diamond;
+}
+
+void Diamond::load()
+{
+    loadDiamond();
 }
 
 void Diamond::onDiamondChanged( )
 {
     saveDiamond();
 }
-

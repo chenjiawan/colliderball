@@ -69,9 +69,10 @@ EntityBase {
 
             if(collidingType === "wall") {
 
-              player.diamondNum .diamond ++
-                player.diamondNum.onDiamondChanged();
-                console.log(player.diamondNum.diamond);
+                onDamagerestart();
+                player.diamondNum .diamond ++
+                player.diamondNum.onDiamondChanged()
+                console.log("contact  :  " + player.diamondNum.diamond);
                 return
 
             }

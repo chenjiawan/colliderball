@@ -38,6 +38,7 @@ Rectangle{
     // 多点触控区域  覆盖几乎整个屏幕
     MultiPointTouchArea {
 
+        id:touchArea
         z: -1
         anchors.fill: parent
 
@@ -154,7 +155,7 @@ Rectangle{
         //  ----------------------更新角色的速度和方向-------------------------------------
         function updateMovement(){
             var velocity = Math.sqrt(newPosX * newPosX + newPosY * newPosY)
-             var maxVelocity = 4
+            var maxVelocity = 4
 
             //规范化速度，到中心的水平和垂直最大距离为1
             //因为它是一个正方形多点触摸区，所以到中心的对角线距离可以大于1
@@ -177,6 +178,7 @@ Rectangle{
             // 下一个输入将是 新的参考点的 新接触点
             didRegisterReferencePoint = false;
 
+            updatePlayerMovementImagePosition()
             // 调整速度
             newPosX = newPosX * 2
             newPosY = newPosY * 2
@@ -188,9 +190,10 @@ Rectangle{
             updateMovement()
         }
 
-        //放卡时空减速消失，小球改变方向原速运动
+        //放开时空减速消失，小球改变方向原速运动
         onPressed: {
 
+            updatePlayerMovementImagePosition()
             //点击的时候控制图片显示
             playerMovementImage.opacity = 1
 

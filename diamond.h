@@ -31,8 +31,10 @@ public:
 
 signals:
     void diamondChanged();
+
 public slots:
 
+    void load();
     void onDiamondChanged();
 private:
     int m_diamond;

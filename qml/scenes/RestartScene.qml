@@ -33,7 +33,7 @@ SceneBase{
             font.pixelSize: 20
             anchors.left: lifeImg.right
             anchors.top: lifeImg.top
-            text:"x" + player.life
+            text:"x" + ball.life
         }
         anchors.fill: parent
         color: "red"

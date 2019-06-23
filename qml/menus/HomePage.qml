@@ -14,9 +14,12 @@ Scene{
     id:homepage
 
     opacity: 1
+    enabled: opacity
 
     signal selectLevelPressed       //选择关卡按钮被按下信号
-    signal playerChanged       //玩家姓名输入完毕信号
+    //signal playerChanged       //玩家姓名输入完毕信号
+
+    property var player
 
     //设置背景图片
     BackgroundImage {
@@ -38,6 +41,7 @@ Scene{
         onClicked:
         {
             selectLevelPressed()
+            //diamondNum.load()
         }
         Image {
             anchors.fill: parent
@@ -64,6 +68,40 @@ Scene{
         }
     }
 
+    //左上角宝石数量
+    Rectangle{
+        width: 65
+        height: 30
+        anchors.top: parent.top
+        anchors.topMargin: 20
+        anchors.left: parent.left
+        anchors.leftMargin: 20
+        color: "#104E8B"
+        opacity: 0.8
+
+        Image {
+            id: diamondImg
+            anchors.left: parent.left
+            width: 30
+            height: 30
+            source: "../../assets/img/ball4.png"
+        }
+
+        Text {
+            id: diaNum
+
+
+            anchors.right: parent.right
+            anchors.rightMargin: 10
+            anchors.top: parent.top
+            anchors.topMargin: 1
+
+            text: GameData.diamondData
+            font.pixelSize: 20
+            color: "white"
+        }
+    }
+
     property alias playerName: playerName
     //新的角色
     Rectangle{
@@ -75,7 +113,7 @@ Scene{
         anchors.bottomMargin: 100
         anchors.horizontalCenter: parent.horizontalCenter
 
-        color: "lightsteelblue"
+        color: "#EE2C2C"
         opacity: 0
         id:newPlayer
         enabled: opacity > 0
@@ -130,19 +168,9 @@ Scene{
         width: 120
 
         onClicked: {
-            newPlayer.opacity = 1
+            newPlayer.opacity = 0.9
             createId.opacity = 0
             select.opacity = 0
         }
     }
 }
-
-
-
-
-
-
-
-
-
-

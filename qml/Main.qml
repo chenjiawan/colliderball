@@ -7,6 +7,9 @@ import "./entities"
 import"./scenes"
 import"./menus"
 import QtQuick.Controls 2.3
+import DiaData 1.0
+
+
 
 GameWindow {
     id: window
@@ -22,6 +25,7 @@ GameWindow {
 
     //菜单场景
     SwipeView{
+        enabled: opacity
         id: menuScene
         anchors.rightMargin: 0
         anchors.bottomMargin: 0
@@ -135,15 +139,19 @@ GameWindow {
         //选择关卡信号槽
         onLevelPressed: {
             gameScene.setLevel(selectedLevel)
+            //diamondNum.load()
             window.state = "game"           //关卡被确定选择后进入游戏状态
         }
         onBackButtonPressed: window.state = "menu"      //选择关卡状态时按下返回将状态设置为菜单状态
     }
 
+
+    property alias gameScene: gameScene
     //一关的游戏场景
     GameScene {
         id: gameScene
         onBackButtonPressed: window.state = "selectLevel"       //游戏状态时按下返回将状态设置为选择关卡状态
+
 
     }
 

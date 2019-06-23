@@ -13,6 +13,7 @@ SceneBase {
 
     // 一个关卡已经被选择的信号
     signal levelPressed(string selectedLevel)
+    signal loadData()
 
     // 背景
     Rectangle {

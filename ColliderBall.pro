@@ -70,8 +70,10 @@ DISTFILES += \
     qml/levels/Level2.qml \
     qml/scenes/RestartScene.qml \
     qml/common/ActivityModel.qml \
-    qml/common/BallcolorModel.qml
+    qml/common/BallcolorModel.qml \
+    qml/GameData.qml
 
 HEADERS += \
-    diamond.h
+    diamond.h \
+    data.h
 

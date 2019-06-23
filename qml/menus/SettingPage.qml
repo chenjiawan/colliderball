@@ -16,7 +16,7 @@ SceneBase{
     signal settingsPressed
     BackgroundMusic{
         id:bgMusic
-        source: "../../assets/sond/GameSceneBg.mp3"
+        //source: "../../assets/sond/GameSceneBg.mp3"
         loops: SoundEffect.Infinite
         volume: 0.35
         autoPlay: false

@@ -6,7 +6,8 @@ import"../control"
 import "../entities"
 import"../scenes"
 import QtMultimedia 5.9
-import DiaDate 1.0
+import DiaData 1.0
+
 //玩家
 EntityBase {
     id:player
@@ -20,7 +21,6 @@ EntityBase {
     property alias diamondNum: diamondNum
     Diamond{
         id:diamondNum
-        diamond: 0
     }
     //signal RestartScenePlay
 
@@ -53,6 +53,7 @@ EntityBase {
 
             console.log("生命值减1, 剩余生命值： "+life)
             resetBall();
+            console.log(GameData.diamondData)
         }
 
         //剩余生命低于0,结束游戏

@@ -5,6 +5,7 @@ import ".."
 import"../control"
 import "../entities"
 import"../scenes"
+import DiaData 1.0
 
 //游戏界面
 SceneBase {
@@ -24,6 +25,7 @@ SceneBase {
     // 当前加载的关卡存储
     property variant activeLevel
 
+
     // 设置当前关卡名字, 使加载器加载绑定的关卡
     function setLevel(fileName) {
         activeLevelFileName = fileName
@@ -40,6 +42,7 @@ SceneBase {
         id: loader
         source: activeLevelFileName != ""  ?  "../levels/" + activeLevelFileName : ""
         onLoaded: {
+
             // 没有在level项目本身中定义宽度和高度，所以在这里定义
             item.width = gameScene.width
             item.height = gameScene.height

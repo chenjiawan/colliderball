@@ -13,19 +13,12 @@ Item {
 
     property alias player: player
     property alias ball: player.ball
+    property alias timeText:countDown.text
     property string levelName
 
     property int gameOverSceneOpacity: 0
+    property int time : 3
 
-    signal selectLevelPressed
-
-    Text {
-        id: xy
-        font.pixelSize: 30
-        color: "red"
-        text:gameScene.gameWindowAnchorItem.x
-        anchors.centerIn: parent
-    }
     //玩家
     Player{
         id:player
@@ -35,6 +28,8 @@ Item {
 
     //玩家移动
     Move{
+        enabled: (gameOverSceneOpacity || loadScene.opacity) <= 0
+
         z:2
         id:moveRed
         player: player
@@ -48,6 +43,8 @@ Item {
         }
         height: parent.height / 2
     }
+
+
 
     //玩家剩余生命值显示图片
     Image {
@@ -144,8 +141,54 @@ Item {
         console.log("restartlevel")
     }
 
+
+    //加载游戏场景
+    Rectangle{
+        z:100
+        id:loadScene
+        color:"lightblue"
+        anchors.centerIn: parent
+        width: parent.width
+        height: parent.height
+        //        radius: 10
+        opacity:time > 0? 1:0
+        enabled: opacity
+
+
+        Text {
+            anchors.centerIn: parent
+            color: "Black"
+            font.pixelSize: 50
+            id: countDown
+            text: time
+        }
+
+        Timer{
+            id:count
+            repeat: true
+            running: true
+            interval: 1000
+            onTriggered: {
+                time --
+                player.diamondNum.load()
+                stopTimer()
+
+            }
+        }
+    }
+    function stopTimer(){
+        if(timeText <= "0")
+        {
+            count.stop()
+            loadScene.opacity = 0
+        }
+    }
+
+
+
     //显示游戏结束的窗口
     Rectangle{
+        z:100
         id:gameOverScene
         color:"lightblue"
         anchors.centerIn: parent
@@ -184,6 +227,9 @@ Item {
                 player.life = 3
                 restartLevel()
                 player.gameoverstop()
+                loadScene.opacity = 1
+                time = 3
+                count.restart()
             }
         }
 
@@ -196,7 +242,6 @@ Item {
 
             text:"取消"
 
-
             onClicked: {
                 gameOverScene.opacity = 0
                 console.log("取消")
@@ -206,6 +251,7 @@ Item {
                 player.gameoverstop()
                 resetLevel()
                 backButtonPressed()
+                player.diamondNum.onDiamondChanged()
             }
         }
     }
